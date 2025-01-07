@@ -43,8 +43,16 @@
 
         // Function to unmute and start the video
         unmuteBtn.addEventListener('click', () => {
-            video.muted = false; // Unmute the video
-            video.play() // Play the video
+            // Record button click using Qualtrics Embedded Data
+            if (typeof Qualtrics !== 'undefined') {
+                Qualtrics.SurveyEngine.setEmbeddedData('VideoStarted', 'true');
+            } else {
+                console.warn("Qualtrics object not found. Are you in a Qualtrics survey?");
+            }
+
+            // Unmute and play the video
+            video.muted = false;
+            video.play()
                 .then(() => {
                     unmuteBtn.style.display = 'none'; // Hide button after starting the video
                 })
